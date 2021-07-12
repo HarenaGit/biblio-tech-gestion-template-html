@@ -1,0 +1,210 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>E-biblio</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="css/vendor.css">
+        <!-- Theme initialization -->
+        <script>
+            var themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
+            {};
+            var themeName = themeSettings.themeName || '';
+            if (themeName)
+            {
+                document.write('<link rel="stylesheet" id="theme-style" href="css/app-' + themeName + '.css">');
+            }
+            else
+            {
+                document.write('<link rel="stylesheet" id="theme-style" href="css/app.css">');
+            }
+        </script>
+        <link rel="stylesheet" href="selection.css"/>
+    </head>
+    <body>
+        <div class="main-wrapper">
+            <div class="app" id="app">
+                <header class="header">
+                    <div class="header-block header-block-collapse d-lg-none d-xl-none">
+                        <button class="collapse-btn" id="sidebar-collapse-btn">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </div>
+                    <div class="header-block header-block-search">
+                        <form role="search">
+                            <div class="input-container">
+                                <i class="fa fa-search"></i>
+                                <input type="search" placeholder="Rechercher">
+                                <div class="underline"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="header-block header-block-buttons">
+                        <a href="#" class="btn btn-sm header-btn">
+                            <i class="fa fa-home"></i>
+                            <span>Accueil</span>
+                        </a>
+                       
+                    </div>
+                    <div class="header-block header-block-nav">
+                        <ul class="nav-profile">
+                           
+                            <li class="profile dropdown">
+                                <a class="nav-link " href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <div class="img" style="background-image: url('https://avatars3.githubusercontent.com/u/3959008?v=3&s=40')"> </div>
+                                    <span class="name"> Utilisateur</span>
+                                </a>
+                               
+                            </li>
+                        </ul>
+                    </div>
+                </header>
+                <aside class="sidebar">
+                    <div class="sidebar-container">
+                        <div class="sidebar-header">
+                            <div class="brand">
+                                <div class="logo">
+                                    <span class="l l1"></span>
+                                    <span class="l l2"></span>
+                                    <span class="l l3"></span>
+                                    <span class="l l4"></span>
+                                    <span class="l l5"></span>
+                                </div>E-Biblio</div>
+                        </div>
+                        <nav class="menu">
+                            <ul class="sidebar-menu metismenu" id="sidebar-menu">
+                                <li  class='active' >
+                                    <a href="acceuil.html">
+                                        <i class="fa fa-home"></i> Accueil</a>
+                                </li>
+                                <hr/>
+                                <li class="ml-2" >
+                                    Liste des traitements : 
+                                </li>
+                                <hr/>
+                                <li>
+                                    <a href="lecteur.html">
+                                        <i class="fa fa-user"></i> Lecteur</a>
+                                </li>
+                                <li>
+                                    <a href="livre.html">
+                                        <i class="fa fa-book"></i> Livre</a>
+                                </li>
+                                <li>
+                                    <a href="pret.html">
+                                        <i class="fa fa-exchange"></i> Pret</a>
+                                </li>
+                         
+                </aside>
+                <div class="sidebar-overlay" id="sidebar-overlay"></div>
+                <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+                <div class="mobile-menu-handle"></div>
+                <article class="content">
+                        <article class="content charts-flot-page">
+                                <div class="title-block">
+                                    <h3 class="title"> Histogramme du nombre de pret des livres </h3>
+                                    <p class="title-description"> Nombre de pret </p>
+                                </div>
+                                <section class="section">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-block">
+                                                    <div class="card-title-block">
+                                                        <h3 class="title"> Bar </h3>
+                                                    </div>
+                                                    <section class="example">
+                                                        <div class="flot-chart">
+                                                            <div class="flot-chart-content" id="flot-bar-chart"></div>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </section>
+                            
+                            </article>
+                   </article>
+              
+             
+                   
+                  
+                        <!-- /.modal-dialog -->
+                    </div>
+                <!-- /.modal -->
+            </div>
+         
+        </div>
+        <!-- Reference block for JS -->
+        <div class="ref" id="ref">
+            <div class="color-primary"></div>
+            <div class="chart">
+                <div class="color-primary"></div>
+                <div class="color-secondary"></div>
+            </div>
+        </div>
+        <script src="js/vendor.js"></script>
+        <script src="js/app.js"></script>
+        <script src="jsAddons/datatables.js"></script>
+        <script>
+            $('#tableLecteur').DataTable();
+            $('#tableLecteur_filter').attr("style","display: flex; justify-content: flex-end")
+            $('#tableLecteur_filter label input').attr("placeholder","Rechercher")
+            $('#tableLecteur_paginate').attr("style","display: flex; justify-content: flex-end")
+            var data = [];
+            data[0] = "";
+            data[1] = "";
+            var element = "null";
+       $("#tableLecteur tbody tr").click(function(){
+           data[0] = $(this).find('td').eq(0).html();
+           data[1] = $(this).find('td').eq(1).html();
+           $(element).attr('style', 'background-color: none');
+           $(this).attr('style', 'background-color: rgba(34,196,255,0.5)');
+           element = this;
+       });
+         
+       $("#modifier").click(function(){
+           if(data[0] != "" && data[1] != "")
+           {
+            $('#titleModal').html("MODIFIER");
+         $('#numLecteur').val(data[0]);
+         $('#nomLecteur').val(data[1]);
+     $('#enregistrer').html("Modifier l'element");
+         $('#numLecteur').attr("disabled", "yes");
+         $('#modal-media').modal('show');  
+           }
+           else
+           {
+              $('#warring-modal').modal('show');
+           }
+       
+       });
+       $("#ajouter").click(function(){
+        $('#titleModal').html("AJOUTER");
+         $('#numLecteur').val("");
+         $('#nomLecteur').val(""); 
+         $('#enregistrer').html("Enregistrer l'element");
+         $('#numLecteur').removeAttr("disabled");
+       });
+       $("#supprimer").click(function(){
+           if(data[0] != "" && data[1] != "")
+           {
+            $('#numLecteurSupp').val(data[0]);
+            $('#confirm-modal').modal('show');
+            $('#valeurElement').html("Voulez-vous vraiment supprimer les informations concernant <span style='font-weight: bold' >" + data[1] + "</span>" + " ?" );
+           }
+           else
+           {
+            $('#warring-modal').modal('show');
+           }
+       
+       });
+        </script>
+    </body>
+</html>

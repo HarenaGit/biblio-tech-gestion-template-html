@@ -1,0 +1,392 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>E-Biblio</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="css/vendor.css">
+        <!-- Theme initialization -->
+        <script>
+            var themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
+            {};
+            var themeName = themeSettings.themeName || '';
+            if (themeName)
+            {
+                document.write('<link rel="stylesheet" id="theme-style" href="css/app-' + themeName + '.css">');
+            }
+            else
+            {
+                document.write('<link rel="stylesheet" id="theme-style" href="css/app.css">');
+            }
+        </script>
+        <link rel="stylesheet" href="selection.css"/>
+    </head>
+    <body>
+
+            <div style="position: absolute; bottom: 30px;right:10px;z-index: 4;height: 50px;width: 500px;" >
+                    <div id="alertMessageError" class="alert  alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <span class="badge badge-pill badge-danger">Erreur</span>....
+                    
+                    </div>
+                </div>
+                <div style="position: absolute; top: 75px;right:10px;z-index: 4;height: 50px;width: 500px;" >
+                        <div id="alertMessageSuccess" class="alert  alert-primary alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <span class="badge badge-pill badge-success">Reussi</span> ....
+                        
+                        </div>
+                    </div>
+
+        <div class="main-wrapper">
+            <div class="app" id="app">
+                <header class="header">
+                    <div class="header-block header-block-collapse d-lg-none d-xl-none">
+                        <button class="collapse-btn" id="sidebar-collapse-btn">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </div>
+                    <div class="header-block header-block-search">
+                        <form role="search">
+                            <div class="input-container">
+                                <i class="fa fa-search"></i>
+                                <input type="search" placeholder="Rechercher">
+                                <div class="underline"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="header-block header-block-buttons">
+                        <a href="#" class="btn btn-sm header-btn">
+                            <i class="fa fa-book"></i>
+                            <span>A propos des livres de la bibliotheque</span>
+                        </a>
+                       
+                    </div>
+                    <div class="header-block header-block-nav">
+                        <ul class="nav-profile">
+                           
+                            <li class="profile dropdown">
+                                <a class="nav-link " href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <div class="img" style="background-image: url('https://avatars3.githubusercontent.com/u/3959008?v=3&s=40')"> </div>
+                                    <span class="name"> Utilisateur</span>
+                                </a>
+                               
+                            </li>
+                        </ul>
+                    </div>
+                </header>
+                <aside class="sidebar">
+                    <div class="sidebar-container">
+                        <div class="sidebar-header">
+                            <div class="brand">
+                                <div class="logo">
+                                    <span class="l l1"></span>
+                                    <span class="l l2"></span>
+                                    <span class="l l3"></span>
+                                    <span class="l l4"></span>
+                                    <span class="l l5"></span>
+                                </div>E-Biblio</div>
+                        </div>
+                        <nav class="menu">
+                            <ul class="sidebar-menu metismenu" id="sidebar-menu">
+                                <li >
+                                    <a href="acceuil.html">
+                                        <i class="fa fa-home"></i> Accueil</a>
+                                </li>
+                                <hr/>
+                                <li class="ml-2" >
+                                    Liste des traitements : 
+                                </li>
+                                <hr/>
+                                <li>
+                                    <a href="lecteur.html">
+                                        <i class="fa fa-user"></i> Lecteur</a>
+                                </li>
+                                <li class='active'>
+                                    <a href="livre.html">
+                                        <i class="fa fa-book"></i> Livre</a>
+                                </li>
+                                <li>
+                                    <a href="pret.html">
+                                        <i class="fa fa-exchange"></i> Pret</a>
+                                </li>
+                         
+                </aside>
+                <div class="sidebar-overlay" id="sidebar-overlay"></div>
+                <div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>
+                <div class="mobile-menu-handle"></div>
+                <article class="content responsive-tables-page">
+                    <div class="title-block">
+                        <section class="section">
+                            <p>Actions : </p>
+                            <button type="button"  data-toggle="modal" data-target="#modal-media" id="ajouter" class="btn btn-primary btn-lg">Ajouter</button>
+                           
+                            <button type="button"  id="modifier" class="btn btn-success btn-lg">Modifier</button>
+                           
+                            <button type="button"  id="supprimer" class="btn btn-danger btn-lg">Supprimer</button>
+
+                          
+                            
+                           
+                        </section>
+                    </div>
+                    <section class="section">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="card-title-block">
+                                            <h3 class="title">Liste des livres</h3>
+                                        </div>
+                                        <section class="col-md-12">
+                                            <div class="table-responsive col-md-12" >
+                                                <table id="tableLecteur" class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            
+                                                            <th>Numero du livre</th>
+                                                            <th>Titre</th>
+                                                            <th>Auteur</th>
+                                                            <th>Date d'edition</th>
+                                                            <th>Disponibilite</th>
+                                                            <th>Nombres de fois de pret</th>
+                                                           
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr >
+                                                            <td>Livre001</td>
+                                                            <td>Larousse</td>
+                                                            <td>Hugo</td>
+                                                            <td>2019-12-03</td>
+                                                            <td>oui</td>
+                                                            <td>12</td>
+                                                        </tr>
+                                                        <tr >
+                                                            <td>Livre002</td>
+                                                            <td>Mathematique</td>
+                                                            <td>Martin</td>
+                                                            <td>2019-08-09</td>
+                                                            <td>non</td>
+                                                            <td>15</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Livre003</td>
+                                                            <td>Histoire</td>
+                                                            <td>Merlin</td>
+                                                            <td>2017-04-25</td>
+                                                            <td>non</td>
+                                                            <td>25</td>
+                                                        
+                                                        </tr>
+                                                       
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                   
+              
+                <div class="modal fade" id="modal-media">
+                       
+                    <div class="modal-dialog modal-md">
+                            <form  method="post" action ="">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="titleModal">AJOUTER</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    <span class="sr-only">Close</span>
+                                </button>
+                            </div>
+                            <form method="post" action =""></form>
+                            <div class="modal-body modal-tab-container">
+                               
+                                <section class="section">
+                                    <div class="row sameheight-container">
+                                           
+                                        <div class="col-md-6">
+                                            <div class="card card-block sameheight-item">
+                                               
+                                                
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Numero du livre</label>
+                                                        <input type="text" class="form-control" required id="numLivre" name="numLivre" placeholder="saisir un numero"> </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">Titre</label>
+                                                        <input type="text" class="form-control" required id="titre" name="titre" placeholder="saisir un titre de livre"> </div>
+                                          
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card card-block sameheight-item">
+                                                
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Auteur</label>
+                                                        <input type="text" class="form-control" required id="auteur" name="auteur" placeholder="saisir le nom d'un auteur"> </div>
+                                                    
+                                                        <div class="form-group">
+                                                        <label for="exampleInputPassword1">Date d'edition</label>
+                                                        <input type="date" class="form-control" required id="dateEdition" name="dateEdition" > </div>
+                                                   
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#"  class="btn btn-secondary" data-dismiss="modal">Fermer</a>
+                                <button type="Submit" class="btn btn-primary" id="enregistrer">Enregistrer l'element</button>
+                            </div>
+                        </form>
+                        </div>
+                 
+                        <!-- /.modal-content -->
+                    </div>
+                
+                    <!-- /.modal-dialog -->
+                </div>
+              
+                <!-- /.modal -->
+                <div class="modal fade" id="confirm-modal">
+                   
+                    <div class="modal-dialog" role="document">
+                            <form method = "post" action="">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <i class="fa fa-warning"></i>Comfirmer</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p id="valeurElement">Voulez vous vraiment supprimer cette element?</p>
+                            </div>
+                            <input type="hidden" name="numLivreSupp" id="numLecteurSupp" />
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">OUI</button>
+                                <a href="#" class="btn btn-secondary" data-dismiss="modal">NON</a>
+                            </div>
+                        </div>
+                    </form>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <div class="modal fade" id="warring-modal">
+                   
+                        <div class="modal-dialog" role="document">
+                                
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">
+                                        <i class="fa fa-warning"></i>Attention</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Veuiller selectionner un element du tableau, SVP!</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                         
+                                </div>
+                            </div>
+                       
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                <!-- /.modal -->
+            </div>
+         
+        </div>
+        <!-- Reference block for JS -->
+        <div class="ref" id="ref">
+            <div class="color-primary"></div>
+            <div class="chart">
+                <div class="color-primary"></div>
+                <div class="color-secondary"></div>
+            </div>
+        </div>
+        <script src="js/vendor.js"></script>
+        <script src="js/app.js"></script>
+        <script src="jsAddons/datatables.js"></script>
+        <script>
+            $('#tableLecteur').DataTable();
+            $('#tableLecteur_filter').attr("style","display: flex; justify-content: flex-end")
+            $('#tableLecteur_filter label input').attr("placeholder","Rechercher")
+            $('#tableLecteur_paginate').attr("style","display: flex; justify-content: flex-end")
+            var data = [];
+            data[0] = "";
+            data[1] = "";
+            data[2] = "";
+            data[3] = "";
+            var element = "null";
+       $("#tableLecteur tbody tr").click(function(){
+           data[0] = $(this).find('td').eq(0).html();
+           data[1] = $(this).find('td').eq(1).html();
+           data[2] = $(this).find('td').eq(2).html();
+           data[3] = $(this).find('td').eq(3).html();
+           $(element).attr('style', 'background-color: none');
+           $(this).attr('style', 'background-color: rgba(34,196,255,0.5)');
+           element = this;
+       });
+       $("#modifier").click(function(){
+           if(data[0] != "" && data[1] != "")
+           {
+            $('#titleModal').html("MODIFIER");
+            $('#numLivre').val(data[0]);
+         $('#titre').val(data[1]); 
+         $('#auteur').val(data[2])
+         $('#dateEdition').val(data[3])
+     $('#enregistrer').html("Modifier l'element");
+         $('#numLivre').attr("disabled", "yes");
+         $('#modal-media').modal('show');  
+           }
+           else
+           {
+              $('#warring-modal').modal('show');
+           }
+       
+       });
+       $("#ajouter").click(function(){
+        $('#titleModal').html("AJOUTER");
+         $('#numLivre').val("");
+         $('#titre').val(""); 
+         $('#auteur').val("")
+         $('#dateEdition').val("")
+         $('#enregistrer').html("Enregistrer l'element");
+         $('#numLivre').removeAttr("disabled");
+       });
+       $("#supprimer").click(function(){
+           if(data[0] != "" && data[1] != "")
+           {
+            $('#numLivreSupp').val(data[0]);
+            $('#confirm-modal').modal('show');
+            $('#valeurElement').html("Voulez-vous vraiment supprimer le livre de :  <span style='font-weight: bold' >" + data[1] + "</span>" + " ?" );
+           }
+           else
+           {
+            $('#warring-modal').modal('show');
+           }
+       
+       });
+        </script>
+    </body>
+</html>
